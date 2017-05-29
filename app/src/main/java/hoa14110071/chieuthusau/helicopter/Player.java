@@ -52,10 +52,10 @@ public class Player extends GameObject {
         }
         animation.update();
         if (up) {
-            dy = (int) (dya -= 1.1);
+            dy = (int) (dya -= 0.5);
 
         } else {
-            dy = (int) (dya += 1.1);
+            dy = (int) (dya += 0.3);
         }
 
         if (dy > 14) dy = 14;
