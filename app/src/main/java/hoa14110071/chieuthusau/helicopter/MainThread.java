@@ -63,7 +63,7 @@ public class MainThread extends Thread {
 //                System.out.println(waitTime);
                 sleep(waitTime);
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             totalTime += System.nanoTime() - startTime;
             frameCount++;

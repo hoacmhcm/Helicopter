@@ -14,6 +14,13 @@ public abstract class GameObject {
     protected int width;
     protected int height;
 
+    public GameObject(int left, int top, int width, int height) {
+        this.left = left;
+        this.top = top;
+        this.width = width;
+        this.height = height;
+    }
+
     public int getLeft() {
         return left;
     }

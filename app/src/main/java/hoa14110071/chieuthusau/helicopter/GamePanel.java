@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 /**
  * Created by minhh on 28-May-17.
  */
@@ -20,20 +22,32 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static final int MOVE_SPEED = -5;
     public static final int DELAY_ANIMATION_PLAYER_MS = 100;
 
+    private long smokeStartTime;
+    private ArrayList<Smoke> smoke;
+
     public GamePanel(Context context) {
         super(context);
         //thêm callback vào SurfaceHolder để sinh ra các sự kiện
         getHolder().addCallback(this);
-        thread = new MainThread(getHolder(), this);
         //make gamePanel focusable so it can handle events onTouch
         setFocusable(true);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        //create background
         background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.grassbg1));
+
+        //create player
         player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter), 65, 25, 3);
+
+        //create smoke
+        smoke = new ArrayList<Smoke>();
+        smokeStartTime=  System.nanoTime();
+
+
         //safely start the game loop
+        thread = new MainThread(getHolder(), this);
         thread.setRunning(true);
         thread.start();
     }
@@ -46,14 +60,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
-        while (retry) {
+        int counter = 0;
+        while (retry && counter < 10000) {
+            counter++;
+            System.out.println(counter);
             try {
                 thread.setRunning(false);
                 thread.join();
+                retry = false;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            retry = false;
         }
     }
 
@@ -78,6 +95,23 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if (player.isPlaying()) {
             background.update();
             player.update();
+
+
+
+            //add smoke puffs when it is time for a new one
+            long elapsed = (System.nanoTime() - smokeStartTime)/1000000;
+            if(elapsed > 120){
+                smoke.add(new Smoke(player.getLeft(), player.getTop()+10));
+                smokeStartTime = System.nanoTime();
+            }
+
+
+            for(int i = 0; i<smoke.size();i++) {
+                smoke.get(i).update();
+                if(smoke.get(i).getLeft()<-10) {
+                    smoke.remove(i);
+                }
+            }
         }
 
     }
@@ -93,6 +127,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             canvas.scale(scaleFactorX, scaleFactorY);
             background.draw(canvas);
             player.draw(canvas);
+
+            //draw smokepuffs
+            for(Smoke sp: smoke) {
+                sp.draw(canvas);
+            }
+
+
             //Efficient way to pop any calls to save() that happened after the save count reached saveCount.
             canvas.restoreToCount(savedState);
         }
