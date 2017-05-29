@@ -18,7 +18,7 @@ public class Background {
 
     public void update() {
         x += dx;
-//        System.out.println(x);
+//        System.out.println(left);
         if (x < -GamePanel.WIDTH) {
             x = 0;
         }
