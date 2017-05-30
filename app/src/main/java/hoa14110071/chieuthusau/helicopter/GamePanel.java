@@ -43,10 +43,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private int currentHighScore;
     private static final int SCORE_BOOSTER = 3;
 
-    // Listener interface for hosting activity to save score in shared preferences
-    public interface HighScoreListener {
-        public void onHighScoreUpdated(int best);
-    }
+
 
     private HighScoreListener mHighScoreListener;
 
@@ -292,6 +289,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         missiles.clear();
         smoke.clear();
+
+        level = 1;
 
         player.resetDY();
         player.setTop(HEIGHT / 2);

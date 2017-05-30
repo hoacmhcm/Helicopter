@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         panel = new GamePanel(this, currentHighScore);
 
         // set listener for handling new high score
-        panel.setHighScoreListener(new GamePanel.HighScoreListener() {
+        panel.setHighScoreListener(new HighScoreListener() {
             @Override
             public void onHighScoreUpdated(int best) {
                 // code to handle updates
