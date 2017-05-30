@@ -3,9 +3,7 @@ package hoa14110071.chieuthusau.helicopter;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-/**
- * Created by minhh on 29-May-17.
- */
+
 
 public class Player extends GameObject {
 

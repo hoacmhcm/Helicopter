@@ -4,9 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-/**
- * Created by minhh on 29-May-17.
- */
+
+
 
 public class Smoke extends GameObject {
     private int r;

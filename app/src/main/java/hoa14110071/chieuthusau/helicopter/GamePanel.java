@@ -14,9 +14,6 @@ import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by minhh on 28-May-17.
- */
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;

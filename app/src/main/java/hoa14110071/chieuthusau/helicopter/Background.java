@@ -3,9 +3,7 @@ package hoa14110071.chieuthusau.helicopter;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-/**
- * Created by minhh on 28-May-17.
- */
+
 
 public class Background {
     private Bitmap image;

@@ -2,9 +2,7 @@ package hoa14110071.chieuthusau.helicopter;
 
 import android.graphics.Bitmap;
 
-/**
- * Created by minhh on 29-May-17.
- */
+
 
 public class Animation {
     private Bitmap[] frames;
