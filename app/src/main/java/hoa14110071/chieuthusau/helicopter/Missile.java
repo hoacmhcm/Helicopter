@@ -7,9 +7,7 @@ import java.util.Random;
 
 
 public class Missile extends GameObject {
-    //    private int score;
     private int speed;
-    //    private int streamId;
     private Random rand = new Random();
     private Animation animation;
 

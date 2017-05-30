@@ -141,7 +141,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             player.update();
 
 
-            //add smoke puffs when it is time for a new one
+            //them khoi phia sau may bay
             long elapsedTimeSmokeMS = (System.nanoTime() - smokeStartTime) / 1000000;
             if (elapsedTimeSmokeMS > 120) {
                 smoke.add(new Smoke(player.getLeft(), player.getTop() + 10));
@@ -156,17 +156,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
 
-            //add new missiles when it is time for a new one
+            //them ten lua
             long missileElapsed = (System.nanoTime() - missileStartTime) / 1000000;
-            if (missileElapsed > (2000 - player.getScore() / 4)) {
+            //cu 2s la ra 1 loat ten lua
+            if (missileElapsed > 2000) {
                 int mX = WIDTH + 10;
                 int mY;
 
-//                if (missiles.size() == 0)
-//                    mY = HEIGHT / 2;   //first missile always goes down the middle
-
-                // Add new missile and reset timer
-                if (player.getScore() >= level * 100) {
+                // them ten lua sau do reset time
+                if (player.getScore() >= level * 200) {
                     System.out.println(level);
                     level++;
                     for (int i = 0; i < level; i++) {
@@ -179,14 +177,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                         missiles.add(new Missile(BitmapFactory.decodeResource(getResources(), R.drawable.missile), mX, mY, 45, 15, player.getScore(), 13));
                     }
                 }
-//                System.out.println(missiles.size());
-
                 missileStartTime = System.nanoTime();
             }
 
-            //loop through every missiles. Check collision and cleanup
+            //lap lai cu qua moi ten lua kiem tra xem co bi dung may bay khong
             for (int i = 0; i < missiles.size(); i++) {
-                //update each missile position and image
+                //cap nhat animation va vi tri ten lua
                 missiles.get(i).update();
 
                 if (collision(missiles.get(i), player)) {
@@ -196,7 +192,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     break;
                 }
 
-                //remove missile if it is way off the screen
+                //neu ten lua qua khoi ben trai man hinh thi remove no di
                 if (missiles.get(i).getLeft() < -100) {
                     missiles.remove(i);
                 }
