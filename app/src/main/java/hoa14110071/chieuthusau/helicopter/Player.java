@@ -62,7 +62,8 @@ public class Player extends GameObject {
 
         if (top < 0) {
             top = 0;
-        }
+        }else  if(top > 450)
+            top = 450;
 //        dy = 0;
     }
 
@@ -71,7 +72,7 @@ public class Player extends GameObject {
         canvas.drawBitmap(animation.getImage(), left, top, null);
     }
 
-    public void ResetDy() {
+    public void resetDY() {
         dy = 0;
     }
 
@@ -90,4 +91,5 @@ public class Player extends GameObject {
     public int getScore() {
         return score;
     }
+    public void resetScore(){score = 0;}
 }
