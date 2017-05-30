@@ -7,10 +7,11 @@ import android.graphics.Rect;
 public abstract class GameObject {
     protected int left;
     protected int top;
-    protected int dx;
-    protected int dy;
     protected int width;
     protected int height;
+    protected int dx;
+    protected int dy;
+
 
     public GameObject(int left, int top, int width, int height) {
         this.left = left;

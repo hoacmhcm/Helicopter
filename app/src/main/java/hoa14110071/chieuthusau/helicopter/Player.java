@@ -21,12 +21,6 @@ public class Player extends GameObject {
     public Player(Bitmap helicopterImage, int w, int h, int numFrames) {
         super(100, GamePanel.HEIGHT / 2, w, h);
 
-//        left = 100;
-//        top = GamePanel.HEIGHT / 2;
-//        this.helicopterImage = helicopterImage;
-//        width = w;
-//        height = h;
-
         dy = 0;
 
         this.score = 0;

@@ -25,6 +25,10 @@ public class Smoke extends GameObject {
         paint.setColor(Color.GRAY);
         paint.setStyle(Paint.Style.FILL);
 
+        Paint paint2 = new Paint();
+        paint2.setColor(Color.RED);
+        paint2.setStyle(Paint.Style.FILL);
+
         canvas.drawCircle(left - r, top - r, r, paint);
         canvas.drawCircle(left - r + 2, top - r - 2, r, paint);
         canvas.drawCircle(left - r + 4, top - r + 1, r, paint);
