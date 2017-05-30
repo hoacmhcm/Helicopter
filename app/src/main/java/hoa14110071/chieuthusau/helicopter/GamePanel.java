@@ -3,8 +3,10 @@ package hoa14110071.chieuthusau.helicopter;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -215,23 +217,23 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
         } else {
             player.resetDY();
-            if(!reset) {
+            if (!reset) {
                 newGameCreated = false;
                 startReset = System.nanoTime();
                 reset = true;
                 disappear = true;
-                explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion),player.getLeft(),
-                        player.getTop()-30, 100, 100, 25);
+                explosion = new Explosion(BitmapFactory.decodeResource(getResources(), R.drawable.explosion), player.getLeft(),
+                        player.getTop() - 30, 100, 100, 25);
 
                 if (collision) {
-                    collision=false;
+                    collision = false;
                 }
             }
 
             explosion.update();
-            long resetElapsed = (System.nanoTime()-startReset)/1000000;
+            long resetElapsed = (System.nanoTime() - startReset) / 1000000;
 
-            if(resetElapsed > 2500 && !newGameCreated) {
+            if (resetElapsed > 2500 && !newGameCreated) {
                 newGame();
             }
         }
@@ -261,9 +263,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             //draw explosion
-            if(gameStarted) {
+            if (gameStarted) {
                 explosion.draw(canvas);
             }
+
+            drawText(canvas);
 
             //Efficient way to pop any calls to save() that happened after the save count reached saveCount.
             canvas.restoreToCount(savedState);
@@ -279,9 +283,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void newGame() {
         // If the new score is better that the record, update and notify the hosting activity
-        if(player.getScore()> currentHighScore) {
+        if (player.getScore() > currentHighScore) {
             currentHighScore = player.getScore();
-            if (mHighScoreListener!=null)
+            if (mHighScoreListener != null)
                 mHighScoreListener.onHighScoreUpdated(currentHighScore);
         }
 
@@ -293,9 +297,29 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         smoke.clear();
 
         player.resetDY();
-        player.setTop(HEIGHT/2);
+        player.setTop(HEIGHT / 2);
 
 
         newGameCreated = true;
+    }
+
+    public void drawText(Canvas canvas) {
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(30);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("POINT: " + player.getScore() * SCORE_BOOSTER, 10, HEIGHT - 10, paint);
+        canvas.drawText("HIGH SCORE: " + currentHighScore * SCORE_BOOSTER, WIDTH - 260, HEIGHT - 10, paint);
+
+        if (!player.isPlaying() && newGameCreated && reset) {
+            Paint paint1 = new Paint();
+            paint1.setTextSize(40);
+            paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            canvas.drawText("NHẤP VÀO ĐỂ BẮT ĐẦU", WIDTH / 2 - 50, HEIGHT / 2, paint1);
+
+            paint1.setTextSize(20);
+            canvas.drawText("NHẤP HOẶC GIỮ ĐỂ BAY LÊN", WIDTH / 2 - 50, HEIGHT / 2 + 20, paint1);
+            canvas.drawText("THẢ RA ĐỂ RƠI XUỐNG", WIDTH / 2 - 50, HEIGHT / 2 + 40, paint1);
+        }
     }
 }

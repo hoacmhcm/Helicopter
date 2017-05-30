@@ -23,9 +23,9 @@ public class Missile extends GameObject {
 //        speed = 10 + (int) (rand.nextDouble() * score / 20);
 //        if (speed > 300)
 //            speed = 300;
-        speed = 10 + (int) (rand.nextDouble() * score / 30);
-        if (speed > 300)
-            speed = 300;
+        speed = 7 + (int) (rand.nextDouble() * score / 30);
+        if (speed > 40)
+            speed = 40;
 
         Bitmap[] image = new Bitmap[numFrames];
         for (int i = 0; i < numFrames; i++) {
