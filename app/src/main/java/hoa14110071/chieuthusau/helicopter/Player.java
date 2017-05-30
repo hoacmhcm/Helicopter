@@ -8,17 +8,12 @@ import android.graphics.Canvas;
  */
 
 public class Player extends GameObject {
-    private Bitmap helicopterImage;
+
+
+    //    private Bitmap helicopterImage;
     private int score;
     private boolean up;
 
-    public boolean isPlaying() {
-        return playing;
-    }
-
-    public void setPlaying(boolean playing) {
-        this.playing = playing;
-    }
 
     private boolean playing;
     private Animation animation;
@@ -30,7 +25,7 @@ public class Player extends GameObject {
 
 //        left = 100;
 //        top = GamePanel.HEIGHT / 2;
-        this.helicopterImage = helicopterImage;
+//        this.helicopterImage = helicopterImage;
 //        width = w;
 //        height = h;
 
@@ -64,10 +59,15 @@ public class Player extends GameObject {
         if (dy < -14) dy = -14;
 
         top += dy;
+
+        if (top < 0) {
+            top = 0;
+        }
 //        dy = 0;
     }
 
     public void draw(Canvas canvas) {
+//        System.out.println(top);
         canvas.drawBitmap(animation.getImage(), left, top, null);
     }
 
@@ -77,5 +77,17 @@ public class Player extends GameObject {
 
     public void setUp(boolean up) {
         this.up = up;
+    }
+
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

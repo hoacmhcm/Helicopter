@@ -8,6 +8,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by minhh on 28-May-17.
@@ -24,6 +25,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private long smokeStartTime;
     private ArrayList<Smoke> smoke;
+
+    private long missileStartTime;
+    private ArrayList<Missile> missiles;
+
+    private Random rand = new Random();
+    private int level;
 
     public GamePanel(Context context) {
         super(context);
@@ -43,7 +50,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         //create smoke
         smoke = new ArrayList<Smoke>();
-        smokeStartTime=  System.nanoTime();
+        smokeStartTime = System.nanoTime();
+
+        //create missile
+        missiles = new ArrayList<>();
+        missileStartTime = System.nanoTime();
+        level = 1;
 
 
         //safely start the game loop
@@ -97,19 +109,71 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             player.update();
 
 
-
             //add smoke puffs when it is time for a new one
-            long elapsed = (System.nanoTime() - smokeStartTime)/1000000;
-            if(elapsed > 120){
-                smoke.add(new Smoke(player.getLeft(), player.getTop()+10));
+            long elapsedTimeSmokeMS = (System.nanoTime() - smokeStartTime) / 1000000;
+            if (elapsedTimeSmokeMS > 120) {
+                smoke.add(new Smoke(player.getLeft(), player.getTop() + 10));
                 smokeStartTime = System.nanoTime();
             }
 
 
-            for(int i = 0; i<smoke.size();i++) {
+            for (int i = 0; i < smoke.size(); i++) {
                 smoke.get(i).update();
-                if(smoke.get(i).getLeft()<-10) {
+                if (smoke.get(i).getLeft() < -10) {
                     smoke.remove(i);
+                }
+            }
+
+            //add new missiles when it is time for a new one
+            long missileElapsed = (System.nanoTime() - missileStartTime) / 1000000;
+            if (missileElapsed > (2000 - player.getScore() / 4)) {
+                int mX = WIDTH + 10;
+                int mY;
+
+//                if (missiles.size() == 0)
+//                    mY = HEIGHT / 2;   //first missile always goes down the middle
+
+
+                // Add new missile and reset timer
+                if (player.getScore() >= level * 100) {
+                    System.out.println(level);
+                    level++;
+                    for (int i = 0; i < level; i++) {
+                        mY = (int) (rand.nextDouble() * HEIGHT);
+                        missiles.add(new Missile(BitmapFactory.decodeResource(getResources(), R.drawable.missile), mX, mY, 45, 15, player.getScore(), 13));
+                    }
+                } else {
+                    for (int i = 0; i < level; i++) {
+                        mY = (int) (rand.nextDouble() * HEIGHT);
+                        missiles.add(new Missile(BitmapFactory.decodeResource(getResources(), R.drawable.missile), mX, mY, 45, 15, player.getScore(), 13));
+                    }
+                }
+//                System.out.println(missiles.size());
+
+//                int missileStreamId = mSoundPool.play(mp3Missile.getSoundId(), .20f, .20f, 1, PLAY_ONCE, 0.8f);
+//                missiles.get(missiles.size()-1).setStreamId(missileStreamId);
+                missileStartTime = System.nanoTime();
+            }
+
+            //loop through every missiles. Check collision and cleanup
+            for (int i = 0; i < missiles.size(); i++) {
+                //update each missile position and image
+                missiles.get(i).update();
+
+//                if(collision(missiles.get(i),player)) {
+////                    Log.i(TAG, "update: collision missile " + i);
+////                    mSoundPool.stop(missiles.get(i).getStreamId());
+//                    missiles.remove(i);
+//                    player.setPlaying(false);
+//                    collision=true;
+//                    break;
+//                }
+
+                //remove missile if it is way off the screen
+                if (missiles.get(i).getLeft() < -100) {
+//                    mSoundPool.stop(missiles.get(i).getStreamId());
+                    missiles.remove(i);
+//                    Log.i(TAG, "update: removing missile "+i);
                 }
             }
         }
@@ -129,8 +193,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             player.draw(canvas);
 
             //draw smokepuffs
-            for(Smoke sp: smoke) {
+            for (Smoke sp : smoke) {
                 sp.draw(canvas);
+            }
+
+            //draw missiles
+            for (Missile m : missiles) {
+                m.draw(canvas);
             }
 
 
