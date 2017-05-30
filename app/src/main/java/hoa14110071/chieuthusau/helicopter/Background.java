@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 
-
 public class Background {
     private Bitmap image;
     private int x = 0, y = 0, dx;
@@ -24,8 +23,7 @@ public class Background {
 
     public void draw(Canvas canvas) {
         canvas.drawBitmap(image, x, y, null);
-        if(x<0)
-        {
+        if (x < 0) {
             canvas.drawBitmap(image, x + GamePanel.WIDTH, y, null);
         }
     }

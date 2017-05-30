@@ -37,12 +37,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Explosion explosion;
     private long startReset;
     private boolean reset;
-    private boolean disappear;
     private boolean gameStarted;
     private boolean collision = false;
     private int currentHighScore;
     private static final int SCORE_BOOSTER = 3;
-
 
 
     private HighScoreListener mHighScoreListener;
@@ -62,7 +60,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         //thêm callback vào SurfaceHolder để sinh ra các sự kiện
         getHolder().addCallback(this);
-        //make gamePanel focusable so it can handle events onTouch
+        //de xu li su kien onTouch can phai setFocusable
         setFocusable(true);
     }
 
@@ -75,7 +73,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.resetScore();
 
         //create smoke
-        smoke = new ArrayList<Smoke>();
+        smoke = new ArrayList<>();
         smokeStartTime = System.nanoTime();
 
         //create missile
@@ -183,8 +181,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 }
 //                System.out.println(missiles.size());
 
-//                int missileStreamId = mSoundPool.play(mp3Missile.getSoundId(), .20f, .20f, 1, PLAY_ONCE, 0.8f);
-//                missiles.get(missiles.size()-1).setStreamId(missileStreamId);
                 missileStartTime = System.nanoTime();
             }
 
@@ -194,8 +190,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 missiles.get(i).update();
 
                 if (collision(missiles.get(i), player)) {
-//                    Log.i(TAG, "update: collision missile " + i);
-//                    mSoundPool.stop(missiles.get(i).getStreamId());
                     missiles.remove(i);
                     player.setPlaying(false);
                     collision = true;
@@ -204,9 +198,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
                 //remove missile if it is way off the screen
                 if (missiles.get(i).getLeft() < -100) {
-//                    mSoundPool.stop(missiles.get(i).getStreamId());
                     missiles.remove(i);
-//                    Log.i(TAG, "update: removing missile "+i);
                 }
             }
         } else {
@@ -215,7 +207,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 newGameCreated = false;
                 startReset = System.nanoTime();
                 reset = true;
-                disappear = true;
                 explosion = new Explosion(BitmapFactory.decodeResource(getResources(), R.drawable.explosion), player.getLeft(),
                         player.getTop() - 30, 100, 100, 25);
 
@@ -269,10 +260,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public boolean collision(GameObject a, GameObject b) {
-        if (Rect.intersects(a.getRectangle(), b.getRectangle())) {
-            return true;
-        }
-        return false;
+        return Rect.intersects(a.getRectangle(), b.getRectangle());
     }
 
     public void newGame() {
@@ -285,7 +273,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         player.resetScore();
 
-        disappear = false;
 
         missiles.clear();
         smoke.clear();
