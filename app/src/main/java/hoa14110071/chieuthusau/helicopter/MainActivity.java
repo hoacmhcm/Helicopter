@@ -29,7 +29,6 @@ public class MainActivity extends Activity {
         panel.setHighScoreListener(new HighScoreListener() {
             @Override
             public void onHighScoreUpdated(int best) {
-
                 // cap nhat shared preferences
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();

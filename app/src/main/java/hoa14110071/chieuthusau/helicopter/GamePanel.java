@@ -159,12 +159,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             //them ten lua
             long missileElapsed = (System.nanoTime() - missileStartTime) / 1000000;
             //cu 2s la ra 1 loat ten lua
-            if (missileElapsed > 2000) {
+            if (missileElapsed > 1000) {
                 int mX = WIDTH + 10;
                 int mY;
 
                 // them ten lua sau do reset time
-                if (player.getScore() >= level * 200) {
+                if (player.getScore() >= level * 100) {
                     System.out.println(level);
                     level++;
                     for (int i = 0; i < level; i++) {

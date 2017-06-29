@@ -3,7 +3,6 @@ package hoa14110071.chieuthusau.helicopter;
 import android.graphics.Rect;
 
 
-
 public abstract class GameObject {
     protected int left;
     protected int top;
