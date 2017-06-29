@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -151,6 +152,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             for (int i = 0; i < smoke.size(); i++) {
                 smoke.get(i).update();
+                //nếu khói ra khỏi màn hình thì remove nó đi
                 if (smoke.get(i).getLeft() < -10) {
                     smoke.remove(i);
                 }
