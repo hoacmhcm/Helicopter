@@ -6,7 +6,7 @@ import android.graphics.Paint;
 
 
 
-
+//Khói được xả ra phía sau chiếc trực thăng
 public class Smoke extends GameObject {
     private int r;
 

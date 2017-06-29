@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 
-
+//Chiếc trực thăng
 public class Player extends GameObject {
 
 

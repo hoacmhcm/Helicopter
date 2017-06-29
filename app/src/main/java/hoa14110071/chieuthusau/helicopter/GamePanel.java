@@ -260,7 +260,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void newGame() {
-        // If the new score is better that the record, update and notify the hosting activity
+        //nếu điểm vừa đạt được khi kết thúc game lớn hơn điểm lớn nhất thì save lại điểm lớn nhất
         if (player.getScore() > currentHighScore) {
             currentHighScore = player.getScore();
             if (mHighScoreListener != null)

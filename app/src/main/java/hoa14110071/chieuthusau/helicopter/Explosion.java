@@ -3,7 +3,7 @@ package hoa14110071.chieuthusau.helicopter;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-
+//Vụ nổ của game
 public class Explosion {
     private int x;
     private int y;

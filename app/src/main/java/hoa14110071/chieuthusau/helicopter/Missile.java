@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 
 import java.util.Random;
 
-
+//Các tên lửa
 public class Missile extends GameObject {
     private int speed;
     private Random rand = new Random();
